@@ -69,7 +69,6 @@ public class EmployeeService {
 	}
 	
 	public EmployeeDTO employeeDetails(int empId) {
-		// TODO Auto-generated method stub
 		Optional<Employee> details=employeeRepository.findById(empId);
 		return new EmployeeDTO().employeeDetailsModel(details.get());
 		
