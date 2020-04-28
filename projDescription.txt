@@ -1,0 +1,41 @@
+There are 3 folders
+
+1. Registeration of employee
+2. Attendance of Employee
+3. front end part of the project
+
+links:
+
+1. Registeration of employee:- running on port(2200) https://github.com/JajAakash/EmployeeAttendanceBackeend
+
+2 . Attendance of Employee:- running on port(3333)
+https://github.com/JajAakash/EmployeeAttendance
+
+
+3. front end part of the project running on port(4200)
+https://github.com/JajAakash/Attendancemanagement
+
+Note:- backeend developed using java spring boot Technology
+
+	front end developed using Angular
+----------------------------------------------------------------------
+Db used MYSQL
+
+create schema `employee`;
+use `employee`;
+
+create table employee(
+employee_id bigint primary key,
+name varchar(50) not null,dob date,
+
+password varchar(80) not null);
+
+
+
+CREATE TABLE attendance(attendance_id bigint primary key not null,employee_id INT,availabilty VARCHAR(255) NOT NULL,date Date,day varchar (50) NOT NULL,in_time TIME,out_time TIME
+);
+
+
+
+
+
