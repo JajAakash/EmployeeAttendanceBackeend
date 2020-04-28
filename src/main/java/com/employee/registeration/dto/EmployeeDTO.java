@@ -7,7 +7,7 @@ import com.employee.registeration.entity.Employee;
 
 public class EmployeeDTO {
 	
-	
+	private String emailId;
 	private int employeeId;
 	private String password;
 	private LocalDate dob;
@@ -29,6 +29,13 @@ public class EmployeeDTO {
 	public LocalDate getDob() {
 		return dob;
 	}
+	
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
@@ -43,11 +50,25 @@ public class EmployeeDTO {
 		
 		Employee employeeEntity= new Employee();
 		
+		employeeEntity.setEmailId(empDTO.getEmailId());
 		employeeEntity.setName(empDTO.getName());
 		employeeEntity.setDob(empDTO.getDob());
 		employeeEntity.setPassword(empDTO.getPassword());
 		//employeeEntity.setPassword(new BCryptPasswordEncoder().encode(this.getPassword()));
 		return employeeEntity;
+		
+		
+	}
+	
+public EmployeeDTO employeeDetailsModel(Employee emp) {
+		
+		EmployeeDTO employeeModel= new EmployeeDTO();
+		employeeModel.setEmployeeId(emp.getEmployeeId());
+		employeeModel.setEmailId(emp.getEmailId());
+		employeeModel.setName(emp.getName());
+		employeeModel.setDob(emp.getDob());
+		employeeModel.setPassword(emp.getPassword());
+		return employeeModel;
 		
 		
 	}

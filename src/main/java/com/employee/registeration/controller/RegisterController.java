@@ -1,11 +1,11 @@
 package com.employee.registeration.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,27 +43,23 @@ public class RegisterController {
 	
 	@RequestMapping(value="/signup",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public int register(@RequestBody EmployeeDTO employeeDTO) {
-		logger.info("SignUP request for Employee {} with EMPLOYEEID {}", employeeDTO.getEmployeeId());
-		
-		return employeeService.employee(employeeDTO);
+		logger.info("SignUP request for Employee {} with EMPLOYEEID {}");
+		int id=employeeService.employee(employeeDTO);
+		return id; 
 		
 	}
 	
 	@RequestMapping(value="/login",method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String login(@RequestBody LoginDTO loginDTO ) throws Exception {
+	public boolean login(@RequestBody LoginDTO loginDTO ) {
 		logger.info("login Req request for Employee ");
 		
 		boolean resp= employeeService.employeeLogin(loginDTO);
-		System.out.println(resp);
-		
-		String posResp="Attendance Marked";
-		String negResp="Attendance not Marked!! please try again!!";
 		if(resp) {
 			ResponseEntity<Integer> attendanceId=restTemplate.postForEntity("http://localhost:3333/availablity/"+loginDTO.getEmployeeId(), loginDTO, int.class);
 			if(attendanceId!=null) {
-				return 	posResp	;	}
+				return 	true	;	}
 		}
-		return negResp;
+		return false;
 		
 	}
 	
@@ -75,7 +71,7 @@ public class RegisterController {
 		logger.info("UPDATE Req request for Employee " +empId);
 		
 		employeeService.employeeUpdate(employeeDTO,empId);
-		
+			
 	}
 
 	
@@ -91,4 +87,15 @@ public class RegisterController {
 		
 	}
 	
-}
+	@RequestMapping(value="/employeedata/{empId}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	public List<Object> getDetails(@PathVariable int empId ) {
+		logger.info("fetching DETAILS Req request for Employee ");
+		List<Object> attendanceDetails=restTemplate.getForObject("http://localhost:3333/attendance/details/"+empId,List.class);
+		EmployeeDTO employee=  employeeService.employeeDetails(empId);
+		attendanceDetails.add(employee);
+		return attendanceDetails;
+		}
+			
+	}
+	

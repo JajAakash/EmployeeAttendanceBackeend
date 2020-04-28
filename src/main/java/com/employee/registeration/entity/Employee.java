@@ -25,6 +25,9 @@ public class Employee {
 	private int EmployeeId;
 	
 	@Column(nullable = false)
+	private String emailId;
+	
+	@Column(nullable = false)
 	private String password;
 	
 	@Column(nullable = false)
@@ -36,6 +39,7 @@ public class Employee {
 	public int getEmployeeId() {
 		return EmployeeId;
 	}
+	
 
 	public void setEmployeeId(int employeeId) {
 		EmployeeId = employeeId;
@@ -67,6 +71,17 @@ public class Employee {
 	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
+
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+	
 	
 	
 	

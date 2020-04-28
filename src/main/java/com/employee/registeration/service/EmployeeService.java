@@ -1,12 +1,9 @@
 package com.employee.registeration.service;
 
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,10 +33,11 @@ public class EmployeeService {
 	
 	
 	@SuppressWarnings("unused")
-	public boolean employeeLogin(LoginDTO loginDTO )  throws Exception {
+	public boolean employeeLogin(LoginDTO loginDTO ) {
 		
 		if(! employeeRepository.findById(loginDTO.getEmployeeId()).isPresent()) {
-			throw new Exception("YOU ARE NOT AUTHORIZED PERSON!!  kindly REGISTER !!");
+			//throw new Exception("YOU ARE NOT AUTHORIZED PERSON!!  kindly REGISTER !!");
+			return false;
 		}
 		
 		Optional<Employee> loginDetails=employeeRepository.findById(loginDTO.getEmployeeId());
@@ -66,6 +64,14 @@ public class EmployeeService {
 		Employee e = new EmployeeDTO().employeeEntity(empDTO);
 		//e.setName(empDTO.getName());
 		return employeeRepository.employeeUpdate(e.getName(), e.getDob(), e.getPassword(), empId);
+		
+		
+	}
+	
+	public EmployeeDTO employeeDetails(int empId) {
+		// TODO Auto-generated method stub
+		Optional<Employee> details=employeeRepository.findById(empId);
+		return new EmployeeDTO().employeeDetailsModel(details.get());
 		
 		
 	}
